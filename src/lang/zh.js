@@ -1,5 +1,7 @@
 export default {
   route: {
+    benchsheet: '风险台账',
+    log: '日志管理',
     dashboard: '首页',
     documentation: '文档',
     guide: '引导页',
@@ -62,8 +64,7 @@ export default {
     clipboardDemo: 'Clipboard',
     i18n: '国际化',
     externalLink: '外链',
-    profile: '个人中心',
-    benchsheet: '风险台账'
+    profile: '个人中心'
   },
   navbar: {
     dashboard: '首页',

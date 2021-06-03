@@ -47,7 +47,19 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/benchsheet/index'),
         name: 'benchsheet',
-        meta: { title: 'benchsheet', icon: 'table' }
+        meta: { title: 'benchsheet', icon: 'benchsheet' }
+      }
+    ]
+  },
+  {
+    path: '/log',
+    component: Layout,
+    children: [
+      {
+        path: 'log',
+        component: () => import('@/views/log/index'),
+        name: 'log',
+        meta: { title: 'log', icon: 'log' }
       }
     ]
   },
