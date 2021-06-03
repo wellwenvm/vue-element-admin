@@ -40,18 +40,6 @@ import nestedRouter from './modules/nested'
  */
 export const constantRoutes = [
   {
-    path: '/benchsheet',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/benchsheet/index'),
-        name: 'benchsheet',
-        meta: { title: 'benchsheet', icon: 'table' }
-      }
-    ]
-  },
-  {
     path: '/redirect',
     component: Layout,
     hidden: true,
