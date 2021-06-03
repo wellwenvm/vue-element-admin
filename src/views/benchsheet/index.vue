@@ -2,14 +2,14 @@
   <div class="app-container">
     <div class="filter-container">
       <el-input v-model="listQuery.orgName" :placeholder="$t('benchsheet.orgName')" style="width: 160px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-select v-model="listQuery.orgType" :placeholder="$t('benchsheet.orgType')" clearable style="width: 200px" class="filter-item">
+      <el-select v-model="listQuery.orgType" :placeholder="$t('benchsheet.orgType')" clearable style="width: 200px" class="filter-item" @change="handleFilter">
         <el-option v-for="item in orgTypeOptions" :key="item" :label="item" :value="item" />
       </el-select>
-      <el-select v-model="listQuery.jurisdiction" :placeholder="$t('benchsheet.jurisdiction')" clearable class="filter-item" style="width: 130px">
+      <!--      <el-select v-model="listQuery.jurisdiction" :placeholder="$t('benchsheet.jurisdiction')" clearable class="filter-item" style="width: 130px">-->
+      <!--        <el-option v-for="item in jurisdictionOptions" :key="item.code" :label="item.name" :value="item.code" />-->
+      <!--      </el-select>-->
+      <el-select v-model="listQuery.jurisdiction" style="width: 140px" :placeholder="$t('benchsheet.jurisdiction')" clearable class="filter-item" @change="handleFilter">
         <el-option v-for="item in jurisdictionOptions" :key="item.code" :label="item.name" :value="item.code" />
-      </el-select>
-      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
-        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
       </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
