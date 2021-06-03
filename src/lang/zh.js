@@ -62,7 +62,8 @@ export default {
     clipboardDemo: 'Clipboard',
     i18n: '国际化',
     externalLink: '外链',
-    profile: '个人中心'
+    profile: '个人中心',
+    benchsheet: '风险台账'
   },
   navbar: {
     dashboard: '首页',
@@ -171,5 +172,29 @@ export default {
     tagsView: '开启 Tags-View',
     fixedHeader: '固定 Header',
     sidebarLogo: '侧边栏 Logo'
+  },
+  benchsheet: {
+    orgName: '机构名称',
+    orgType: '机构类型',
+    jurisdiction: '所属辖区',
+    productVol: '产品只数',
+    mngmntScale: '管理规模',
+    invstrVol: '投资者人数（机构）',
+    unrecordedScale: '未备案规模',
+    riskType: '风险类型',
+    riskDetail: '具体风险情况',
+    dailyChargeMeasure: '日常监管措施',
+    administrationChargeMesure: '行政监管措施',
+    isTranferAdministrationRegisterInspection: '是否移送行政立案稽查',
+    administrativeSanctionSituation: '行政处罚情况',
+    associationAutonomySituation: '协会自律情况',
+    isNoticeGovernment: '是否通报地方政府',
+    isCrimeClueTranferPolice: '犯罪线索是否移交公安机关',
+    policeInterveneSituation: '公安机关介入情况',
+    isOrgOrActualOontrollerOutOfContact: '机构/实控人是否失联',
+    isInvolveIllegalFundRaising: '是否涉及非法集资',
+    isRunPofConcurrently: '是否兼营私募业务',
+    personInCharge: '监管责任人',
+    remarks: '备注'
   }
 }
