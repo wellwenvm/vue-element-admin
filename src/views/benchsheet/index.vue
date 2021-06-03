@@ -5,9 +5,7 @@
       <el-select v-model="listQuery.orgType" :placeholder="$t('benchsheet.orgType')" clearable style="width: 200px" class="filter-item" @change="handleFilter">
         <el-option v-for="item in orgTypeOptions" :key="item" :label="item" :value="item" />
       </el-select>
-      <!--      <el-select v-model="listQuery.jurisdiction" :placeholder="$t('benchsheet.jurisdiction')" clearable class="filter-item" style="width: 130px">-->
-      <!--        <el-option v-for="item in jurisdictionOptions" :key="item.code" :label="item.name" :value="item.code" />-->
-      <!--      </el-select>-->
+
       <el-select v-model="listQuery.jurisdiction" style="width: 140px" :placeholder="$t('benchsheet.jurisdiction')" clearable class="filter-item" @change="handleFilter">
         <el-option v-for="item in jurisdictionOptions" :key="item.code" :label="item.name" :value="item.code" />
       </el-select>
