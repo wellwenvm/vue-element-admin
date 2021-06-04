@@ -10,17 +10,17 @@
         <el-option v-for="item in jurisdictionOptions" :key="item.code" :label="item.name" :value="item.code" />
       </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        {{ $t('table.search') }}
+        {{ $t('benchsheet.search') }}
       </el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        {{ $t('table.add') }}
+        {{ $t('benchsheet.add') }}
       </el-button>
+      <el-select v-model="listQuery.groupByField" :placeholder="$t('benchsheet.groupByField')" clearable style="width: 200px" class="filter-item">
+        <el-option v-for="item in groupByOptions" :key="item.code" :label="item.name" :value="item.code" />
+      </el-select>
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        {{ $t('table.export') }}
+        {{ $t('benchsheet.export') }}
       </el-button>
-      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
-        {{ $t('table.reviewer') }}
-      </el-checkbox>
     </div>
 
     <el-table
@@ -33,63 +33,75 @@
       style="width: 100%;"
       @sort-change="sortChange"
     >
-      <el-table-column :label="$t('table.id')" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
-        <template slot-scope="{row}">
-          <span>{{ row.id }}</span>
+      <el-table-column :label="$t('benchsheet.id')" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
+        <template slot-scope="scope">
+          <span> {{ (listQuery.page - 1) * listQuery.limit + scope.$index+1 }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.date')" width="150px" align="center">
+      <el-table-column :label="$t('benchsheet.orgName')" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.orgName }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.title')" min-width="150px">
+      <el-table-column :label="$t('benchsheet.orgType')" width="150px" align="center">
         <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
-          <el-tag>{{ row.type | typeFilter }}</el-tag>
+          <span>{{ row.orgType }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.author')" width="110px" align="center">
+      <el-table-column :label="$t('benchsheet.jurisdiction')" width="110px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.author }}</span>
+          <span>{{ row.jurisdiction }}</span>
         </template>
       </el-table-column>
-      <el-table-column v-if="showReviewer" :label="$t('table.reviewer')" width="110px" align="center">
+      <el-table-column :label="$t('benchsheet.productVol')" width="60px" align="center">
         <template slot-scope="{row}">
-          <span style="color:red;">{{ row.reviewer }}</span>
+          <span>{{ row.productVol }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.importance')" width="80px">
+      <el-table-column :label="$t('benchsheet.mngmntScale')" width="110px" align="center">
         <template slot-scope="{row}">
-          <svg-icon v-for="n in +row.importance" :key="n" icon-class="star" class="meta-item__icon" />
+          <span>{{ row.mngmntScale }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.readings')" align="center" width="95">
+      <el-table-column :label="$t('benchsheet.invstrNbr')" width="60px" align="center">
         <template slot-scope="{row}">
-          <span v-if="row.pageviews" class="link-type" @click="handleFetchPv(row.pageviews)">{{ row.pageviews }}</span>
-          <span v-else>0</span>
+          <span>{{ row.invstrNbr }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.status')" class-name="status-col" width="100">
+      <el-table-column :label="$t('benchsheet.orgInvstrVol')" width="60px" align="center">
         <template slot-scope="{row}">
-          <el-tag :type="row.status | statusFilter">
-            {{ row.status }}
-          </el-tag>
+          <span>{{ row.orgInvstrVol }}</span>
+        </template>
+      </el-table-column><el-table-column :label="$t('benchsheet.unrecordedScale')" width="110px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.unrecordedScale }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.actions')" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('benchsheet.riskType')" width="110px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.riskType }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('benchsheet.riskDetail')" width="200px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.riskDetail }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('benchsheet.recordTime')" width="120px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.recordTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('benchsheet.actions')" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            {{ $t('table.edit') }}
+            {{ $t('benchsheet.detail') }}
           </el-button>
-          <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
-            {{ $t('table.publish') }}
+          <el-button size="mini" type="success" @click="handleUpdate(row)">
+            {{ $t('benchsheet.edit') }}
           </el-button>
-          <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
-            {{ $t('table.draft') }}
-          </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
-            {{ $t('table.delete') }}
+          <el-button size="mini" type="danger" @click="handleDelete(row,$index)">
+            {{ $t('benchsheet.delete') }}
           </el-button>
         </template>
       </el-table-column>
@@ -156,13 +168,20 @@ const jurisdictionOptions = [
   { code: '3', name: '天津' },
   { code: '4', name: '克拉玛依' }
 ]
-
+const groupByOptions = [
+  { code: 'jurisdiction', name: '所属辖区' },
+  { code: 'orgType', name: '机构类型' },
+  { code: 'riskType', name: '风险类型' }
+]
 // arr to obj, such as { CN : "China", US : "USA" }
 const jurisdictionKeyValue = jurisdictionOptions.reduce((acc, cur) => {
   acc[cur.code] = cur.name
   return acc
 }, {})
-
+const groupByKeyValue = groupByOptions.reduce((acc, cur) => {
+  acc[cur.code] = cur.name
+  return acc
+}, {})
 export default {
   name: 'BenchSheet',
   components: { Pagination },
@@ -178,6 +197,9 @@ export default {
     },
     typeFilter(type) {
       return jurisdictionKeyValue[type]
+    },
+    exportFilter(type) {
+      return groupByKeyValue[type]
     }
   },
   data() {
@@ -188,7 +210,7 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 20,
+        limit: 10,
         orgType: undefined,
         title: undefined,
         type: undefined,
@@ -196,6 +218,7 @@ export default {
       },
       orgTypeOptions: ['私募证券投资基金管理人', '私募股权', '创业投资基金管理人', '其他私募投资基金管理人', '私募资产配置类管理人'],
       jurisdictionOptions,
+      groupByOptions,
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
       statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: true,
@@ -211,8 +234,8 @@ export default {
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
-        update: 'Edit',
-        create: 'Create'
+        update: '编辑',
+        create: '创建'
       },
       dialogPvVisible: false,
       pvData: [],
