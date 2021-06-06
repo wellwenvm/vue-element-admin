@@ -81,12 +81,12 @@ export default {
     dailyChargeMeasure: '日常监管措施',
     administrationChargeMesure: '行政监管措施',
     ifTranferAdministrationRegisterInspection: '是否移送行政立案稽查',
-    administrativeSanctionSituation: '行政处罚情况',
+    administrationSanctionSituation: '行政处罚情况',
     associationAutonomySituation: '协会自律情况',
     ifNoticeGovernment: '是否通报地方政府',
     ifCrimeClueTranferPolice: '犯罪线索是否移交公安机关',
     policeInterveneSituation: '公安机关介入情况',
-    ifOrgOrActualOontrollerOutOfContact: '机构/实控人是否失联',
+    ifOrgOrActualControllerOutOfContact: '机构/实控人是否失联',
     ifInvolveIllegalFundRaising: '是否涉及非法集资',
     ifRunPofConcurrently: '是否兼营私募业务',
     personInCharge: '监管责任人',
@@ -101,7 +101,8 @@ export default {
     groupByField: '分组导出',
     search: '搜索',
     add: '添加',
-    export: '导出'
+    export: '导出',
+    import: '导入'
   },
   navbar: {
     dashboard: '首页',

@@ -21,6 +21,9 @@
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
         {{ $t('benchsheet.export') }}
       </el-button>
+      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-upload" @click="handleDownload">
+        {{ $t('benchsheet.import') }}
+      </el-button>
     </div>
 
     <el-table
@@ -110,36 +113,85 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item :label="$t('table.type')" prop="type">
-          <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="200px" style="width: 600px; margin-left:50px;">
+        <el-form-item :label="$t('benchsheet.orgName')" prop="title">
+          <el-input v-model="temp.orgName" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.orgType')" prop="type">
+          <el-select v-model="temp.orgType" class="filter-item" placeholder="请选择机构类型">
+            <el-option v-for="item in orgTypeOptions" :key="item" :label="item" :value="item" />
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('table.date')" prop="timestamp">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />
+        <el-form-item :label="$t('benchsheet.jurisdiction')" prop="title">
+          <el-input v-model="temp.jurisdiction" />
         </el-form-item>
-        <el-form-item :label="$t('table.title')" prop="title">
-          <el-input v-model="temp.title" />
+        <el-form-item :label="$t('benchsheet.mngmntScale')" prop="title">
+          <el-input v-model="temp.mngmntScale" />
         </el-form-item>
-        <el-form-item :label="$t('table.status')">
-          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
-          </el-select>
+        <el-form-item :label="$t('benchsheet.invstrNbr')" prop="title">
+          <el-input v-model="temp.invstrNbr" />
         </el-form-item>
-        <el-form-item :label="$t('table.importance')">
-          <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />
+        <el-form-item :label="$t('benchsheet.orgInvstrVol')" prop="title">
+          <el-input v-model="temp.orgInvstrVol" />
         </el-form-item>
-        <el-form-item :label="$t('table.remark')">
-          <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="Please input" />
+        <el-form-item :label="$t('benchsheet.unrecordedScale')" prop="title">
+          <el-input v-model="temp.unrecordedScale" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.riskType')" prop="title">
+          <el-input v-model="temp.riskType" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.riskDetail')" prop="title">
+          <el-input v-model="temp.riskDetail" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.dailyChargeMeasure')" prop="title">
+          <el-input v-model="temp.dailyChargeMeasure" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.administrationChargeMesure')" prop="title">
+          <el-input v-model="temp.administrationChargeMesure" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.ifTranferAdministrationRegisterInspection')" prop="title">
+          <el-input v-model="temp.ifTranferAdministrationRegisterInspection" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.administrationSanctionSituation')" prop="title">
+          <el-input v-model="temp.administrationSanctionSituation" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.associationAutonomySituation')" prop="title">
+          <el-input v-model="temp.associationAutonomySituation" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.ifNoticeGovernment')" prop="title">
+          <el-input v-model="temp.ifNoticeGovernment" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.ifCrimeClueTranferPolice')" prop="title">
+          <el-input v-model="temp.ifCrimeClueTranferPolice" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.policeInterveneSituation')" prop="title">
+          <el-input v-model="temp.policeInterveneSituation" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.ifOrgOrActualControllerOutOfContact')" prop="title">
+          <el-input v-model="temp.ifOrgOrActualControllerOutOfContact" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.ifInvolveIllegalFundRaising')" prop="title">
+          <el-input v-model="temp.ifInvolveIllegalFundRaising" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.ifRunPofConcurrently')" prop="title">
+          <el-input v-model="temp.ifRunPofConcurrently" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.personInCharge')" prop="title">
+          <el-input v-model="temp.personInCharge" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.remarks')" prop="title">
+          <el-input v-model="temp.remarks" />
+        </el-form-item>
+        <el-form-item :label="$t('benchsheet.recordTime')" prop="title">
+          <el-input v-model="temp.recordTime" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">
-          {{ $t('table.cancel') }}
+          {{ $t('benchsheet.cancel') }}
         </el-button>
         <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
-          {{ $t('table.confirm') }}
+          {{ $t('benchsheet.confirm') }}
         </el-button>
       </div>
     </el-dialog>
@@ -150,7 +202,7 @@
         <el-table-column prop="pv" label="Pv" />
       </el-table>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">{{ $t('table.confirm') }}</el-button>
+        <el-button type="primary" @click="dialogPvVisible = false">{{ $t('benchsheet.confirm') }}</el-button>
       </span>
     </el-dialog>
   </div>
